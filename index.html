@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Zain&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 
     <style>
@@ -18,41 +19,100 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Lato', sans-serif; /* Font default */
+            font-family: 'Lato', sans-serif; /* Font default dikembalikan ke Lato */
         }
-        body { background-color: #f0f2f5; color: #1a1a1a; line-height: 1.6; padding-bottom: 40px; position: relative; }
+        body {
+            background-color: #f0f2f5;
+            color: #1a1a1a; /* Warna teks standar/hitam */
+            line-height: 1.6;
+            padding-bottom: 40px;
+            position: relative;
+        }
         .main-content-container { max-width: 600px; margin: 70px auto 20px auto; padding: 0 20px; background-color: white; border-radius: 15px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 25px; padding-top: 20px; }
-        .header h1 { color: #2d3436; font-size: 2.2em; margin-bottom: 5px; font-weight: 700; display: inline-block; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; /* Font stack */ }
-        .header p { color: #666; font-size: 0.9em; margin-bottom: 10px; font-style: italic; font-family: 'Zain', 'Kosugi Maru', sans-serif; /* Font stack */ }
-        .search-box { width: 100%; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1em; background-color: white; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin-bottom: 10px; font-family: 'Lato', 'Kosugi Maru', sans-serif; /* Font stack */ }
+        .header h1 {
+            color: #1a1a1a; /* Warna judul diubah menjadi hitam/standar (sesuai permintaan terakhir) */
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            display: inline-block;
+            /* Font H1 dikembalikan ke desain awal, dengan Gloria Hallelujah utama untuk non-Mandarin */
+            font-family: 'Gloria Hallelujah', 'Kosugi Maru', 'Noto Sans SC', cursive;
+            line-height: 1.3;
+        }
+
+        /* Styling untuk judul Mandarin dengan Pinyin per karakter (Ruby style) - INI DIPERTAHANKAN */
+        .mandarin-title-ruby-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            line-height: normal;
+        }
+        .ruby-char-group {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 3px;
+            margin-right: 3px;
+            vertical-align: bottom;
+        }
+        .ruby-pinyin {
+            font-size: 0.35em; /* Ukuran Pinyin relatif kecil terhadap H1 */
+            color: #555;     /* Warna Pinyin standar */
+            /* Font Pinyin: Lato sebagai dasar, Kosugi/Noto SC untuk karakter khusus jika perlu */
+            font-family: 'Lato', 'Kosugi Maru', 'Noto Sans SC', sans-serif;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1px;
+            display: block;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+        .ruby-hanzi {
+            font-size: 1.3em;  /* Hanzi diperbesar relatif terhadap H1 */
+            /* Font Hanzi: Noto Sans SC dan Kosugi Maru jadi prioritas */
+            font-family: 'Noto Sans SC', 'Kosugi Maru', sans-serif;
+            /* Warna akan diwarisi dari .header h1 (hitam) */
+            display: block;
+            text-align: center;
+            line-height: 1;
+        }
+
+        /* Mengembalikan font-family elemen lain ke pengaturan awal dari prompt pertama */
+        .header p { color: #666; font-size: 0.9em; margin-bottom: 10px; font-style: italic; font-family: 'Zain', 'Kosugi Maru', sans-serif; }
+        .search-box { width: 100%; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1em; background-color: white; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin-bottom: 10px; font-family: 'Lato', 'Kosugi Maru', sans-serif; }
         .button-container { text-align: center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        #randomWordBtn, #toggleCrudeBtn { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 25px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s ease; font-family: 'Lato', 'Kosugi Maru', sans-serif; font-weight: 600; /* Font stack */ }
+        #randomWordBtn, #toggleCrudeBtn { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 25px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s ease; font-family: 'Lato', 'Kosugi Maru', sans-serif; font-weight: 600; }
         #randomWordBtn:hover, #toggleCrudeBtn:hover { background-color: #2980b9; }
+
         .word-list { background-color: white; border-radius: 15px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); overflow: hidden; }
         .word-item { padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; transition: background-color 0.3s ease; background-color: transparent; display: block; }
         .word-item:hover { background-color: #f8f9fa; }
         .word-item:last-child { border-bottom: none; }
         .highlight { background-color: yellow !important; }
         .word-container { display: flex; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-        /* Apply font stack to elements containing dictionary content */
-        .word { font-weight: 600; color: #000000; font-size: 1.1em; flex-grow: 1; flex-shrink: 1; margin-right: 10px; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; /* Font stack */ word-break: break-word; }
-        .kelas-kata { font-size: 0.85em; color: #666; font-weight: 600; margin-right: 10px; flex-shrink: 0; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; /* Font stack */ }
+
+        /* Font untuk .word, .kelas-kata, dll. dikembalikan ke desain awal */
+        .word { font-weight: 600; color: #000000; font-size: 1.1em; flex-grow: 1; flex-shrink: 1; margin-right: 10px; font-family: 'Gloria Hallelujah', 'Kosugi Maru', 'Noto Sans SC', cursive; word-break: break-word; }
+        .kelas-kata { font-size: 0.85em; color: #666; font-weight: 600; margin-right: 10px; flex-shrink: 0; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; }
         .word-item.is-crude .word { color: #e74c3c; }
+
         .speak-icon { cursor: pointer; color: #3498db; font-size: 1.3em; flex-shrink: 0; transition: color 0.2s ease; display: flex; align-items: center; padding: 5px; margin: -5px; margin-left: auto; border-radius: 50%; }
         .speak-icon:hover { color: #2980b9; background-color: #e9f5fe; }
         .speak-icon svg { width: 1em; height: 1em; fill: currentColor; display: block; }
         .synonym-bubbles { margin-top: 0; margin-bottom: 8px; line-height: 1.8; }
-        .synonym-bubble { display: inline-block; background-color: #eaf2f8; color: #2980b9; font-size: 0.85em; padding: 4px 10px; border-radius: 15px; margin-right: 6px; margin-bottom: 5px; white-space: nowrap; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; /* Font stack */ }
-        .definition { color: #3498db; font-size: 0.95em; margin-top: 0; margin-bottom: 0; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, padding-bottom 0.5s ease-in-out; padding-bottom: 0; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; /* Font stack */ word-break: break-word; }
-        .word-item.active .definition { max-height: 500px; /* Increased max-height for potentially longer linked definitions */ padding-bottom: 8px; }
+        .synonym-bubble { display: inline-block; background-color: #eaf2f8; color: #2980b9; font-size: 0.85em; padding: 4px 10px; border-radius: 15px; margin-right: 6px; margin-bottom: 5px; white-space: nowrap; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; }
+        .definition { color: #3498db; font-size: 0.95em; margin-top: 0; margin-bottom: 0; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, padding-bottom 0.5s ease-in-out; padding-bottom: 0; font-family: 'Gloria Hallelujah', 'Kosugi Maru', cursive; word-break: break-word; }
+        .word-item.active .definition { max-height: 500px; padding-bottom: 8px; }
+
         .linked-word { text-decoration: underline; color: #007bff; cursor: pointer; transition: color 0.2s ease; }
         .linked-word:hover { color: #0056b3; }
-        .highlight-search { background-color: #ffc107 !important; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #000 !important; /* Ensure highlighted text is visible */ }
+        .highlight-search { background-color: #ffc107 !important; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #000 !important; }
         .no-results { padding: 20px; text-align: center; color: #666; font-style: italic; }
         .alphabet-index { position: fixed; top: 50%; right: 10px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; z-index: 1000; padding: 5px 2px; background-color: rgba(255, 255, 255, 0.8); border-radius: 8px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08); max-height: 80vh; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
         .alphabet-index::-webkit-scrollbar { display: none; }
-        .alphabet-index a { display: block; text-decoration: none; color: #3498db; font-size: 0.85em; font-weight: 600; padding: 2px 5px; margin: 1px 0; transition: color 0.2s ease, background-color 0.2s ease; border-radius: 3px; text-transform: uppercase; font-family: 'Lato', 'Kosugi Maru', sans-serif; /* Font stack */ }
+        .alphabet-index a { display: block; text-decoration: none; color: #3498db; font-size: 0.85em; font-weight: 600; padding: 2px 5px; margin: 1px 0; transition: color 0.2s ease, background-color 0.2s ease; border-radius: 3px; text-transform: uppercase; font-family: 'Lato', 'Kosugi Maru', sans-serif; }
         .alphabet-index a:hover { color: white; background-color: #3498db; }
         .alphabet-index a.disabled { color: #ccc; cursor: not-allowed; background-color: transparent; }
         @media (min-width: 640px) { .main-content-container { margin-right: 60px; } .alphabet-index { right: 10px; } }
@@ -62,6 +122,7 @@
         .lang-btn img { width: 24px; height: 18px; display: block; }
         .lang-btn:hover { background-color: #f0f0f0; }
         .lang-btn.active { background-color: #3498db; border-color: #2980b9; }
+
     </style>
 </head>
 <body>
@@ -73,7 +134,7 @@
     <div class="alphabet-index" id="alphabetIndex"></div>
     <div class="main-content-container">
         <div class="header">
-            <h1 data-translate-key="title">kamus phenkbandia</h1>
+            <h1 id="mainTitle" data-translate-key="title"></h1>
             <p data-translate-key="subtitle">Tekan kata untuk melihat artinya</p>
             <input type="text" class="search-box" placeholder="Cari kata..." id="searchInput" data-translate-key="search_placeholder">
             <div class="button-container">
@@ -85,18 +146,134 @@
     </div>
 
 <script>
-    // 1. OBJEK UNTUK TERJEMAHAN TEKS UI
     const translations = {
         id: {
-            page_title: "Kamus Phenkbandia", title: "kamus phenkbandia", subtitle: "Tekan kata untuk melihat artinya", search_placeholder: "Cari kata...", random_word_btn: "Kata Acak", toggle_crude_btn_hide: "Sembunyikan Kata Kasar", toggle_crude_btn_show: "Tampilkan Kata Kasar", no_results: "Tidak ada kata yang ditemukan.", speak_icon_title: "Dengarkan", crude_hidden_alert_start: "Kata \"", crude_hidden_alert_end: "\" saat ini disembunyikan oleh filter kata kasar.", no_random_words: "Tidak ada kata yang tersedia untuk dipilih secara acak dengan filter saat ini.", word_definition_label: "Arti", word_synonym_label: "Sinonim", word_class_label: "Kelas Kata"
+            page_title: "Kamus Phenkbandia",
+            title: "kamus phenkbandia", // Judul untuk bahasa Indonesia
+            subtitle: "Tekan kata untuk melihat artinya",
+            search_placeholder: "Cari kata...",
+            random_word_btn: "Kata Acak",
+            toggle_crude_btn_hide: "Sembunyikan Kata Kasar",
+            toggle_crude_btn_show: "Tampilkan Kata Kasar",
+            no_results: "Tidak ada kata yang ditemukan.",
+            speak_icon_title: "Dengarkan",
+            crude_hidden_alert_start: "Kata \"",
+            crude_hidden_alert_end: "\" saat ini disembunyikan oleh filter kata kasar.",
+            no_random_words: "Tidak ada kata yang tersedia untuk dipilih secara acak dengan filter saat ini.",
+            word_definition_label: "Arti",
+            word_synonym_label: "Sinonim",
+            word_class_label: "Kelas Kata"
         },
         en: {
-            page_title: "Phenkbandia Dictionary", title: "Phenkbandia Dictionary", subtitle: "Click a word to see its meaning", search_placeholder: "Search word...", random_word_btn: "Random Word", toggle_crude_btn_hide: "Hide Crude Words", toggle_crude_btn_show: "Show Crude Words", no_results: "No words found.", speak_icon_title: "Listen", crude_hidden_alert_start: "The word \"", crude_hidden_alert_end: "\" is currently hidden by the crude word filter.", no_random_words: "No words are available for random selection with the current filter.", word_definition_label: "Meaning", word_synonym_label: "Synonym", word_class_label: "Part of Speech"
+            page_title: "Phenkbandia Dictionary",
+            title: "Phenkbandia Dictionary", // Judul untuk bahasa Inggris
+            subtitle: "Click a word to see its meaning",
+            search_placeholder: "Search word...",
+            random_word_btn: "Random Word",
+            toggle_crude_btn_hide: "Hide Crude Words",
+            toggle_crude_btn_show: "Show Crude Words",
+            no_results: "No words found.",
+            speak_icon_title: "Listen",
+            crude_hidden_alert_start: "The word \"",
+            crude_hidden_alert_end: "\" is currently hidden by the crude word filter.",
+            no_random_words: "No words are available for random selection with the current filter.",
+            word_definition_label: "Meaning",
+            word_synonym_label: "Synonym",
+            word_class_label: "Part of Speech"
         },
         zh: {
-            page_title: "Phenkbandia 词典", title: "Phenkbandia 词典", subtitle: "点击单词查看释义", search_placeholder: "搜索词语...", random_word_btn: "随机词语", toggle_crude_btn_hide: "隐藏粗俗词语", toggle_crude_btn_show: "显示粗俗词语", no_results: "未找到任何词语。", speak_icon_title: "听", crude_hidden_alert_start: "词语 “", crude_hidden_alert_end: "” 目前已被粗俗词语过滤器隐藏。", no_random_words: "当前筛选条件下没有可供随机选择的词语。", word_definition_label: "意思", word_synonym_label: "同义词", word_class_label: "词性"
+            page_title: "鹏班迪亚词典",
+            title_hanzi: "鹏班迪亚词典", // Hanzi untuk judul Mandarin
+            title_pinyin_syllables: ["Péng", "Bān", "dí", "yà", "Cí", "diǎn"], // Pinyin per suku kata
+            // title: "鹏班迪亚词典", // Bisa ditambahkan jika ada logika fallback yang membutuhkan 'title'
+            subtitle: "点击单词查看释义",
+            search_placeholder: "搜索词语...",
+            random_word_btn: "随机词语",
+            toggle_crude_btn_hide: "隐藏粗俗词语",
+            toggle_crude_btn_show: "显示粗俗词语",
+            no_results: "未找到任何词语。",
+            speak_icon_title: "听",
+            crude_hidden_alert_start: "词语 “",
+            crude_hidden_alert_end: "” 目前已被粗俗词语过滤器隐藏。",
+            no_random_words: "当前筛选条件下没有可供随机选择的词语。",
+            word_definition_label: "意思",
+            word_synonym_label: "同义词",
+            word_class_label: "词性"
         }
     };
+
+    let currentLang = 'id';
+
+    function applyTranslations(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            const langTranslations = translations[lang];
+
+            if (!langTranslations) return;
+
+            let textContentForKey = langTranslations[key]; // Ambil teks berdasarkan kunci utama dulu
+
+            if (el.tagName === 'INPUT' && el.placeholder) {
+                if (textContentForKey !== undefined) el.placeholder = textContentForKey;
+            } else if (el.tagName === 'TITLE') {
+                if (textContentForKey !== undefined) document.title = textContentForKey;
+            } else if (el.id === 'mainTitle' && key === 'title') {
+                if (lang === 'zh') {
+                    el.innerHTML = ''; // Kosongkan dulu
+                    const rubyContainer = document.createElement('div');
+                    rubyContainer.className = 'mandarin-title-ruby-container';
+
+                    const hanziChars = translations.zh.title_hanzi.split('');
+                    const pinyinSyllables = translations.zh.title_pinyin_syllables;
+
+                    hanziChars.forEach((hanziChar, index) => {
+                        const group = document.createElement('span');
+                        group.className = 'ruby-char-group';
+
+                        const pinyinSpan = document.createElement('span');
+                        pinyinSpan.className = 'ruby-pinyin';
+                        pinyinSpan.textContent = pinyinSyllables[index] || '';
+
+                        const hanziSpan = document.createElement('span');
+                        hanziSpan.className = 'ruby-hanzi';
+                        hanziSpan.textContent = hanziChar;
+
+                        group.appendChild(pinyinSpan);
+                        group.appendChild(hanziSpan);
+                        rubyContainer.appendChild(group);
+                    });
+                    el.appendChild(rubyContainer);
+                } else {
+                    // Untuk bahasa lain (ID, EN), gunakan 'title' dari translations[lang].title
+                    if (langTranslations.title !== undefined) {
+                        el.textContent = langTranslations.title;
+                    } else if (textContentForKey !== undefined) { // Fallback jika langTranslations.title tidak ada
+                        el.textContent = textContentForKey;
+                    }
+                }
+            } else { // Untuk elemen lain
+                if (textContentForKey !== undefined) el.textContent = textContentForKey;
+            }
+        });
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const langButtons = document.querySelectorAll('.lang-btn');
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                applyTranslations(lang);
+            });
+        });
+        applyTranslations(currentLang);
+    });
 
     // 2. DATA KATA ASLI DALAM BAHASA INDONESIA
     const words = [
@@ -141,7 +318,7 @@
         { word: "Buta Permanen", definition: "Ejekan favorit Rafael untuk orang yang gambarnya dikasih mata putih sebelah, kesannya kehilangan mata selamanya", synonym: "buta", isCrude: false, kelasKata: "[jlk.]" },
         { word: "Campur Babi", definition: "Rumor soal makanan di restoran keluarga Christian yang dikatakan mengandung babi", synonym: "", isCrude: false, kelasKata: "[ungk.]" },
         { word: "Cepat", definition: "Melakukan sesuatu dalam waktu singkat", synonym: "segera", isCrude: false, kelasKata: "[v.]" },
-        { word: "Cepat Sikit Kalian", definition: "Frasa perintah/ajakan untuk segera melakukan sesuatu ('sikit' pengaruh logat regional)", synonym: "", isCrude: false, kelasKata: "[ungk.]" },
+        { word: "Cepat Sikit Kalian", definition: "Frasa perintah/ajakan untuk segera melakukan sesuatu", synonym: "", isCrude: false, kelasKata: "[ungk.]" },
         { word: "ChatGPT", definition: "Situs AI yang bisa menjawab semua pertanyaan; asumsi menyontek untuk orang yang menggunakan AI", synonym: "", isCrude: false, kelasKata: "[n.]" },
         { word: "Ciak Sai", definition: "Makian Hokkien, artinya 'makan kotoran'; sering diucapin Rafael pas lagi kesal", synonym: "makan taik", isCrude: true, kelasKata: "[ungk.]" },
         { word: "Cukaninas", definition: "Penulisan lain dari \"Suka Nindas\"", synonym: "suka nindas", isCrude: false, kelasKata: "[ungk.]" },
